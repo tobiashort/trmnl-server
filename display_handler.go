@@ -17,10 +17,10 @@ type DisplayResponse struct {
 	ResetFirmware  bool   `json:"reset_firmware"`
 }
 
-func NewDisplayResponse() DisplayResponse {
+func NewDisplayResponse(baseUrl string) DisplayResponse {
 	return DisplayResponse{
 		Status:         0,
-		ImageURL:       "http://192.168.1.122:8080/image",
+		ImageURL:       baseUrl + "/image",
 		FileName:       fmt.Sprintf("%d", time.Now().Unix()),
 		UpdateFirmware: false,
 		FirmwareURL:    "",
@@ -29,9 +29,11 @@ func NewDisplayResponse() DisplayResponse {
 	}
 }
 
-type DisplayHandler struct{}
+type DisplayHandler struct {
+	BaseUrl string
+}
 
-func (DisplayHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h DisplayHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(NewDisplayResponse())
+	json.NewEncoder(w).Encode(NewDisplayResponse(h.BaseUrl))
 }

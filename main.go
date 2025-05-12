@@ -13,22 +13,24 @@ func main() {
 	log.SetPrefix(cfmt.Sprint("#b{LOG: }"))
 
 	var debug bool
+	var baseUrl string
 	var accessToken string
 	flag.BoolVar(&debug, "debug", false, "enable debug mode")
+	flag.StringVar(&baseUrl, "baseUrl", "", "the base URL")
 	flag.StringVar(&accessToken, "accessToken", "", "access token")
 	flag.Parse()
 
 	log.Println("Debug:", debug)
-	log.Println("Verbose:", debug)
+	log.Println("Base URL:", baseUrl)
 	if accessToken != "" {
 		log.Println("Access Token: ****")
 	} else {
-		log.Println("Access Token: #r{not set}")
+		log.Println(cfmt.Sprint("Access Token: #r{not set}"))
 	}
 
 	http.Handle("/", CatchAllHandler{})
 	http.Handle("POST /api/log", LogHandler{})
-	http.Handle("GET /api/display", DisplayHandler{})
+	http.Handle("GET /api/display", DisplayHandler{BaseUrl: baseUrl})
 	http.Handle("GET /image", ImageHandler{})
 
 	var mux http.Handler
