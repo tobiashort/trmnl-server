@@ -13,10 +13,18 @@ func main() {
 	log.SetPrefix(cfmt.Sprint("#b{LOG: }"))
 
 	var debug bool
+	var accessToken string
 	flag.BoolVar(&debug, "debug", false, "enable debug mode")
+	flag.StringVar(&accessToken, "accessToken", "", "access token")
 	flag.Parse()
 
 	log.Println("Debug:", debug)
+	log.Println("Verbose:", debug)
+	if accessToken != "" {
+		log.Println("Access Token: ****")
+	} else {
+		log.Println("Access Token: #r{not set}")
+	}
 
 	http.Handle("/", CatchAllHandler{})
 	http.Handle("POST /api/log", LogHandler{})
@@ -25,6 +33,7 @@ func main() {
 
 	var mux http.Handler
 	mux = http.DefaultServeMux
+	mux = AuthMiddleware{AccessToken: accessToken, Handler: mux}
 	mux = DebugMiddleware{Active: debug, Handler: mux}
 
 	addr := ":8080"
