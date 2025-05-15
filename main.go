@@ -15,9 +15,11 @@ func main() {
 	var debug bool
 	var baseUrl string
 	var accessToken string
+	var port string
 	flag.BoolVar(&debug, "debug", false, "enable debug mode")
 	flag.StringVar(&baseUrl, "baseUrl", "", "the base URL")
 	flag.StringVar(&accessToken, "accessToken", "", "access token")
+	flag.StringVar(&port, "port", "8080", "port")
 	flag.Parse()
 
 	log.Println("Debug:", debug)
@@ -38,7 +40,7 @@ func main() {
 	mux = AuthMiddleware{AccessToken: accessToken, Handler: mux}
 	mux = DebugMiddleware{Active: debug, Handler: mux}
 
-	addr := ":8080"
+	addr := ":" + port
 	log.Println("Start listening on", addr)
 	err := http.ListenAndServe(addr, mux)
 	if err != nil {
