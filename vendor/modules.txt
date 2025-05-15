@@ -1,0 +1,9 @@
+# github.com/tobiashort/ansi v0.0.0-20250416201302-7f32a30d024d
+## explicit; go 1.24.1
+github.com/tobiashort/ansi
+# github.com/tobiashort/cfmt v0.0.0-20250419072841-9ad53823ae44
+## explicit; go 1.24.2
+github.com/tobiashort/cfmt
+# github.com/tobiashort/isatty v0.0.0-20250419072540-9a4b01f48059
+## explicit; go 1.24.2
+github.com/tobiashort/isatty
