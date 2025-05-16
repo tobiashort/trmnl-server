@@ -1,2 +1,4 @@
 .access_token
 .DS_Store
+build/trmnl-server
+build/trmnl-server.tar

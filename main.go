@@ -8,22 +8,23 @@ import (
 	"github.com/tobiashort/cfmt"
 )
 
+// to be set via -ldflags "-X main.accessToken=..."
+var accessToken string
+
 func main() {
 	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
 	log.SetPrefix(cfmt.Sprint("#b{LOG: }"))
 
 	var debug bool
 	var baseUrl string
-	var accessToken string
 	var port string
 	flag.BoolVar(&debug, "debug", false, "enable debug mode")
 	flag.StringVar(&baseUrl, "baseUrl", "", "the base URL")
-	flag.StringVar(&accessToken, "accessToken", "", "access token")
 	flag.StringVar(&port, "port", "8080", "port")
 	flag.Parse()
-
 	log.Println("Debug:", debug)
 	log.Println("Base URL:", baseUrl)
+
 	if accessToken != "" {
 		log.Println("Access Token: ****")
 	} else {
