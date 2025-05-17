@@ -16,8 +16,8 @@ func (ImageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	t := time.Now()
 	d := watch.Image(t)
 	w.Header().Add("Content-Length", fmt.Sprintf("%d", len(d)))
-	_, err := w.Write(d)
 	w.WriteHeader(200)
+	_, err := w.Write(d)
 	if err != nil {
 		log.Println(err)
 	}
