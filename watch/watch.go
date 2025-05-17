@@ -49,7 +49,7 @@ var (
 
 func Image(t time.Time) []byte {
 	h := t.Hour()
-	m := int(math.Round(float64(t.Minute())/5) * 5)
+	m := int(math.Round(float64(t.Minute()+1)/5) * 5)
 	switch m {
 	case 0:
 		return imageForHour(h)
