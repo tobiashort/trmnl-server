@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"net/http"
 	"time"
 )
@@ -28,7 +29,7 @@ func (h DisplayHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	res := DisplayResponse{
 		Status:         0,
 		ImageURL:       h.BaseUrl + "/image",
-		FileName:       fmt.Sprintf("%d", ts),
+		FileName:       fmt.Sprintf("%d", int(math.Floor(float64(ts)/300))*300),
 		UpdateFirmware: false,
 		FirmwareURL:    "",
 		RefreshRate:    fmt.Sprintf("%d", rs),
