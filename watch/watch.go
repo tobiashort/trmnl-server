@@ -110,10 +110,13 @@ func imageForHour(h int) []byte {
 }
 
 func merge(images ...[]byte) []byte {
-	merged := images[0]
-	for i := 1; i < len(images); i++ {
-		for j := range images[i][62:] {
-			merged[j] &= images[i][j]
+	merged := make([]byte, 48062)
+	for i := range merged {
+		merged[i] = 0xFF
+	}
+	for _, image := range images {
+		for j := range image {
+			merged[j] &= image[j]
 		}
 	}
 	return merged
