@@ -47,18 +47,18 @@ var (
 )
 
 func Image(t time.Time) []byte {
-	m := t.Minute()
+	m := t.Minute() + 1
 	h := t.Hour()
 	if m > 57 {
-		return imageForHour(h)
+		return imageForHour(h + 1)
 	} else if m > 52 {
-		return merge(foif, vor, imageForHour(h))
+		return merge(foif, vor, imageForHour(h+1))
 	} else if m > 47 {
-		return merge(zä, vor, imageForHour(h))
+		return merge(zä, vor, imageForHour(h+1))
 	} else if m > 42 {
-		return merge(viertel, vor, imageForHour(h))
+		return merge(viertel, vor, imageForHour(h+1))
 	} else if m > 37 {
-		return merge(zwänzg, vor, imageForHour(h))
+		return merge(zwänzg, vor, imageForHour(h+1))
 	} else if m > 32 {
 		return merge(foif, ab, halbi, imageForHour(h+1))
 	} else if m > 27 {
