@@ -2,7 +2,6 @@ package watch
 
 import (
 	_ "embed"
-	"math"
 	"time"
 )
 
@@ -48,35 +47,34 @@ var (
 )
 
 func Image(t time.Time) []byte {
+	m := t.Minute()
 	h := t.Hour()
-	m := int(math.Round(float64(t.Minute()+1)/5) * 5)
-	switch m {
-	case 0:
+	if m > 57 {
 		return imageForHour(h)
-	case 5:
-		return merge(foif, ab, imageForHour(h))
-	case 10:
-		return merge(zä, ab, imageForHour(h))
-	case 15:
-		return merge(viertel, ab, imageForHour(h))
-	case 20:
-		return merge(zwänzg, ab, imageForHour(h))
-	case 25:
-		return merge(foif, vor, halbi, imageForHour(h+1))
-	case 30:
-		return merge(halbi, imageForHour(h+1))
-	case 35:
+	} else if m > 52 {
+		return merge(foif, vor, imageForHour(h))
+	} else if m > 47 {
+		return merge(zä, vor, imageForHour(h))
+	} else if m > 42 {
+		return merge(viertel, vor, imageForHour(h))
+	} else if m > 37 {
+		return merge(zwänzg, vor, imageForHour(h))
+	} else if m > 32 {
 		return merge(foif, ab, halbi, imageForHour(h+1))
-	case 40:
-		return merge(zwänzg, vor, imageForHour(h+1))
-	case 45:
-		return merge(viertel, vor, imageForHour(h+1))
-	case 50:
-		return merge(zä, vor, imageForHour(h+1))
-	case 55:
-		return merge(foif, vor, imageForHour(h+1))
-	default:
-		panic("unreachable")
+	} else if m > 27 {
+		return merge(halbi, imageForHour(h+1))
+	} else if m > 22 {
+		return merge(foif, vor, halbi, imageForHour(h+1))
+	} else if m > 17 {
+		return merge(zwänzg, ab, imageForHour(h))
+	} else if m > 12 {
+		return merge(viertel, ab, imageForHour(h))
+	} else if m > 7 {
+		return merge(zä, ab, imageForHour(h))
+	} else if m > 2 {
+		return merge(foif, ab, imageForHour(h))
+	} else {
+		return imageForHour(h)
 	}
 }
 
