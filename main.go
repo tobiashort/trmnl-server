@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/tobiashort/cfmt"
+	"github.com/tobiashort/cfmt-go"
 )
 
 // to be set via -ldflags "-X main.accessToken=..."
