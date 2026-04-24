@@ -33,22 +33,18 @@ func (h LogHandler) parsePayload(payload []byte) error {
 	if err != nil {
 		return err
 	}
-	logMap, ok := obj["log"].(map[string]any)
+	logsArray, ok := obj["logs"].([]any)
 	if !ok {
-		return fmt.Errorf("log cast error")
-	}
-	logsArray, ok := logMap["logs_array"].([]any)
-	if !ok {
-		return fmt.Errorf("logs_array cast error")
+		return fmt.Errorf("logs cast error")
 	}
 	for _, item := range logsArray {
 		itemMap, ok := item.(map[string]any)
 		if !ok {
 			return fmt.Errorf("item cast error")
 		}
-		msg, ok := itemMap["log_message"].(string)
+		msg, ok := itemMap["message"].(string)
 		if !ok {
-			return fmt.Errorf("log_message cast error")
+			return fmt.Errorf("message cast error")
 		}
 		log.Println(msg)
 	}
